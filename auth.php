@@ -132,6 +132,7 @@ if ($ok) {
 
 $config = block_onlinesurvey_get_launch_config();
 
+/*
 $return = block_onlinesurvey_lti_post_launch_html_curl($params, $redirecturi, $config, $state);
 
 if ($config->presentation == BLOCK_ONLINESURVEY_PRESENTATION_BRIEF) {
@@ -164,19 +165,20 @@ if ($modalzoom || $config->presentation != BLOCK_ONLINESURVEY_PRESENTATION_BRIEF
 file_put_contents($CFG->dataroot . '/block_onlinesurvey_auth_output.txt', $return, FILE_APPEND); // ICUNDO!
 
 echo $return;
-//$r = '<form action="' . $redirecturi . "\" name=\"ltiAuthForm\" id=\"ltiAuthForm\" " .
-//     "method=\"post\" enctype=\"application/x-www-form-urlencoded\">\n";
-//if (!empty($params)) {
-//    foreach ($params as $key => $value) {
-//        $key = htmlspecialchars($key, ENT_COMPAT);
-//        $value = htmlspecialchars($value, ENT_COMPAT);
-//        $r .= "  <input type=\"hidden\" name=\"{$key}\" value=\"{$value}\"/>\n";
-//    }
-//}
-//$r .= "</form>\n";
-//$r .= "<script type=\"text/javascript\">\n" .
-//    "//<![CDATA[\n" .
-//    "document.ltiAuthForm.submit();\n" .
-//    "//]]>\n" .
-//    "</script>\n";
-//echo $r;
+*/
+$r = '<form action="' . $redirecturi . "\" name=\"ltiAuthForm\" id=\"ltiAuthForm\" " .
+     "method=\"post\" enctype=\"application/x-www-form-urlencoded\">\n";
+if (!empty($params)) {
+    foreach ($params as $key => $value) {
+        $key = htmlspecialchars($key, ENT_COMPAT);
+        $value = htmlspecialchars($value, ENT_COMPAT);
+        $r .= "  <input type=\"hidden\" name=\"{$key}\" value=\"{$value}\"/>\n";
+    }
+}
+$r .= "</form>\n";
+$r .= "<script type=\"text/javascript\">\n" .
+    "//<![CDATA[\n" .
+    "document.ltiAuthForm.submit();\n" .
+    "//]]>\n" .
+    "</script>\n";
+echo $r;
