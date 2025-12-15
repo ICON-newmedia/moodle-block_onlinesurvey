@@ -1385,7 +1385,7 @@ function block_onlinesurvey_get_params()
         $type = lti_get_type($config->typeid);
         if ($type) {
             $urls = block_onlinesurvey_get_tool_type_urls($type);
-            set_config('publickeysetplatform', $urls['publickeyset'], 'block_onlinesurvey');
+            set_config('publickeysetplatform', $urls['publickeysetplatform'], 'block_onlinesurvey');
             set_config('authrequest', $urls['authrequest'], 'block_onlinesurvey');
             set_config('accesstoken', $urls['accesstoken'], 'block_onlinesurvey');
             $config->publickeysetplatform = $urls['publickeyset'];
