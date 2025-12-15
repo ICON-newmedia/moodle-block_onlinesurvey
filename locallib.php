@@ -632,7 +632,7 @@ function block_onlinesurvey_get_launch_data($config = null, $context = null, $co
     $allparams = block_onlinesurvey_build_request_lti($config, $course);
 
     if (!isset($config->id)) {
-        $config->id = null;
+        $config->id = ''; // null;
     }
     $requestparams = $allparams;
     $requestparams = array_merge($requestparams, lti_build_standard_message($config, $orgid, "")); // ICTODO: check if changing 3rd param from false to "" affects LTI 1.3
@@ -1121,7 +1121,16 @@ function block_onlinesurvey_lti_initiate_login($config, $messagetype = 'basic-lt
     $modalzoom = optional_param('modalZoom', 0, PARAM_INT);
     $SESSION->modalzoom = $modalzoom;
     foreach ($params as $key => $value) {
+        if (!is_string($key)) {
+            continue; // Skip non-string keys - shouldn't happen, but if it does, it's not a valid key
+        }
         $key = htmlspecialchars($key, ENT_COMPAT);
+        if (is_string($value)) {
+            $value = htmlspecialchars($value, ENT_COMPAT);
+        } else {
+            $value = json_encode($value);
+        }
+        $r .= "<input type=\"hidden\" name=\"$key\" value=\"$value\" />\n";
         $value = htmlspecialchars($value, ENT_COMPAT);
         $r .= "  <input type=\"hidden\" name=\"{$key}\" value=\"{$value}\"/>\n";
     }
