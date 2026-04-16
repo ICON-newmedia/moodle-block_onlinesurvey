@@ -1325,6 +1325,11 @@ function block_onlinesurvey_update_lti_type()
     if (!$DB->record_exists('lti_types', ['id' => $ltitype->id])) {
         block_onlinesurvey_restore_deleted_lti_type($ltitype->id);
     }
+    if (isset($ltitype->toolproxyid) && empty(trim($ltitype->toolproxyid))) {
+        // Empty toolproxyid causes problems with lti_update_type().
+        // As it will try to delete the entry from lti_tool_settings with that empty id.
+        unset($ltitype->toolproxyid);
+    }
     lti_update_type($ltitype, $configparams);
     block_onlinesurvey_update_lti_type_backup($ltitype->typeid);
     $config = get_config('block_onlinesurvey');
